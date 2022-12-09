@@ -9,7 +9,7 @@
 
 {
 
-    //variables globales
+    //variables de bloque
     let h1 = document.createElement("h1");
     let div = document.createElement("div");
     let input = document.createElement('input');
@@ -18,15 +18,19 @@
 
         init: () => {
             calculadora.crearDiv(),
-                calculadora.crearInput(),
-                calculadora.crearBotones();
+            calculadora.crearInput(),
+            calculadora.crearBotones();
         },
 
         comportamiento(valor) {
 
             if (valor <= '9' && valor >= '1') {
                 return () => {
-                    input.value += valor; //concatenamos el nuevo valor podemos usar input.innerhtml
+                    if (input.value === '0') {
+                        input.value = valor;
+                    } else { // se puede usar también return en vez de else{}
+                        input.value += valor; //concatenamos el nuevo valor podemos usar input.innerhtml
+                    }
                 }
             }
 
@@ -59,13 +63,11 @@
                 case '0':
 
                     return () => {
-                        if (input.value.startsWith('0')) {
-                            input.value = valor;
-                        } 
-                        if (input.value.includes('.')) {
+                        if (input.value != '0') {
                             input.value += valor;
                         }
                     }
+
                 default:
                     break; //sino puede hacer nada rompe el ciclo
             }
