@@ -10,11 +10,10 @@
 {
 
     //variables de bloque
-    let h1 = document.createElement("h1");
-    let div = document.createElement("div");
-    let input = document.createElement('input');
 
     const calculadora = {
+
+        // input:undefined,
 
         init: () => {
             calculadora.crearDiv(),
@@ -26,10 +25,10 @@
 
             if (valor <= '9' && valor >= '1') {
                 return () => {
-                    if (input.value === '0') {
-                        input.value = valor;
+                    if (calculadora.input.value === '0') {
+                        calculadora.input.value = valor;
                     } else { // se puede usar también return en vez de else{}
-                        input.value += valor; //concatenamos el nuevo valor podemos usar input.innerhtml
+                        calculadora.input.value += valor; //concatenamos el nuevo valor podemos usar calculadora.input.innerhtml
                     }
                 }
             }
@@ -38,33 +37,33 @@
 
                 case 'CE':
                     return () => {
-                        input.value = 0;
+                        calculadora.input.value = 0;
                     }
 
                 case '←':
 
                     return () => {
-                        input.value = input.value.substring(0, (input.value.length - 1));
+                        calculadora.input.value = calculadora.input.value.substring(0, (calculadora.input.value.length - 1));
                         // vamos borrando el último elemento 
-                        if (input.value == "") {
-                            input.value = 0;
+                        if (calculadora.input.value == "") {
+                            calculadora.input.value = 0;
                         }
                     }
 
                 case ',':
 
                     return () => {
-                        if (!input.value.includes('.')) {
+                        if (!calculadora.input.value.includes('.')) {
                             //si el imput no contiene un punto, se lo añadimos cuando lo pulsamos
-                            input.value += '.';
+                            calculadora.input.value += '.';
                         }
                     }
 
                 case '0':
 
                     return () => {
-                        if (input.value != '0') {
-                            input.value += valor;
+                        if (calculadora.input.value != '0') {
+                            calculadora.input.value += valor;
                         }
                     }
 
@@ -76,6 +75,9 @@
         crearDiv: () => {
 
             //h1 y su css
+            let h1 = document.createElement("h1");
+            let div = document.createElement("div");
+            
             h1.innerHTML = 'Calculadora';
             h1.style.textAlign = 'center';
             document.body.appendChild(h1);
@@ -87,10 +89,14 @@
             div.style.height = '400px';
             div.style.margin = '0 auto';
             div.style.border = '1px solid black';
-            document.body.appendChild(div);
+
+            // document.body.appendChild(calculadora.div); // nos esta creado y da error
+            calculadora.div = div; // es como si pusieramos arriba div:null 
+            document.body.appendChild(calculadora.div); // nos esta creado y da error
         },
 
         crearInput: () => {
+            let input = document.createElement('input');
             input.value = 0;
             input.setAttribute('readonly', '');
 
@@ -99,7 +105,9 @@
             input.style.gridColumn = "1 / 5";
             input.style.margin = "4px";
             input.style.padding = "4px";
-            div.appendChild(input);
+
+            calculadora.input = input;
+            calculadora.div.appendChild(input);
         },
 
         crearBotones: () => {
@@ -110,7 +118,7 @@
                 boton.style.margin = '4px';
                 boton.style.padding = '4px';
                 boton.style.fontSize = '30px';
-                div.appendChild(boton);
+                calculadora.div.appendChild(boton);
                 // le pasamos el comportamiento cada vez que se hace click en un botón
                 boton.addEventListener('click', calculadora.comportamiento(element));
             });
