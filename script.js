@@ -3,7 +3,7 @@
  * Ni document.write() ni fichero.css están permitidos.
  * 
  * @author josemi
- * @version 2.0.0 Objeto Predefinido Calculadora
+ * @version 3.0.0 Objeto Predefinido Calculadora
  * 
  */
 
@@ -13,12 +13,13 @@
 
     const calculadora = {
 
-        // input:undefined,
+        input: undefined,
+
 
         init: () => {
             calculadora.crearDiv(),
-            calculadora.crearInput(),
-            calculadora.crearBotones();
+                calculadora.crearInput(),
+                calculadora.crearBotones();
         },
 
         comportamiento(valor) {
@@ -67,9 +68,23 @@
                         }
                     }
 
+                case '±':
+
+                    return () => {
+
+                        if (calculadora.input.value.includes('-')) {
+                            calculadora.input.value = calculadora.input.value.substring(1, calculadora.input.value.length);
+                        } else {
+                            if (calculadora.input.value != '0') {
+                                calculadora.input.value = '-' + calculadora.input.value;
+                            }
+                        }
+                    }
+
                 default:
                     break; //sino puede hacer nada rompe el ciclo
             }
+
         },
 
         crearDiv: () => {
@@ -77,7 +92,7 @@
             //h1 y su css
             let h1 = document.createElement("h1");
             let div = document.createElement("div");
-            
+
             h1.innerHTML = 'Calculadora';
             h1.style.textAlign = 'center';
             document.body.appendChild(h1);
