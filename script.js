@@ -14,6 +14,10 @@
     const calculadora = {
 
         input: undefined,
+        operando1: undefined,
+        operando2: undefined,
+        suma: false,
+        resta: false,
 
 
         init: () => {
@@ -81,11 +85,114 @@
                         }
                     }
 
+                case '+':
+
+                    return () => {
+                        calculadora.operando1 = calculadora.input.value;
+                        reset();
+                        calculadora.suma = true;
+                    }
+
+                case '-':
+
+                    return () => {
+                        calculadora.operando1 = calculadora.input.value;
+                        reset();
+                        calculadora.resta = true;
+                    }
+
+                case 'x':
+
+                    return () => {
+                        calculadora.operando1 = calculadora.input.value;
+                        reset();
+                        calculadora.multiplicacion = true;
+                    }
+
+                case '÷':
+
+                    return () => {
+                        calculadora.operando1 = calculadora.input.value;
+                        reset();
+                        calculadora.division = true;
+                    }
+
+                case '%':
+
+                    return () => {
+                        calculadora.operando1 = calculadora.input.value;
+                        reset();
+                        calculadora.porcentaje = true;
+                    }
+
+                case '=':
+
+                    return () => {
+
+                        if (calculadora.suma) {
+                            calculadora.operando2 = calculadora.input.value;
+                            calculadora.input.value = parseFloat(calculadora.operando1) + parseFloat(calculadora.operando2);
+                            calculadora.suma = false;
+                        } else if (calculadora.resta) {
+                            calculadora.operando2 = calculadora.input.value;
+                            calculadora.input.value = parseFloat(calculadora.operando1) - parseFloat(calculadora.operando2);
+                            calculadora.resta = false;
+                        }else if (calculadora.multiplicacion) {
+                            calculadora.operando2 = calculadora.input.value;
+                            calculadora.input.value = parseFloat(calculadora.operando1) * parseFloat(calculadora.operando2);
+                            calculadora.multiplicacion = false;
+                        }else if (calculadora.division) {
+                            calculadora.operando2 = calculadora.input.value;
+                            calculadora.input.value = parseFloat(calculadora.operando1) / parseFloat(calculadora.operando2);
+                            calculadora.division = false;
+                        }else if (calculadora.porcentaje) {
+                            calculadora.operando2 = calculadora.input.value;
+                            calculadora.input.value = parseFloat(calculadora.operando1) % parseFloat(calculadora.operando2);
+                            calculadora.porcentaje = false;
+                        }
+
+                    }
+
                 default:
+                    // calcular(valor);
+
                     break; //sino puede hacer nada rompe el ciclo
             }
 
+            // function calcular(valor) {
+
+            //     if (calculadora.suma) {
+            //         calculadora.input.value = parseFloat(calculadora.operando1) + parseFloat(calculadora.operando2);
+            //         calculadora.suma = false;
+            //     }
+            // }
+
+            function reset() {
+                calculadora.input.value = 0;
+            }
+
         },
+
+        // operaciones: (valor, op1, op2) => {
+        //     switch (valor) {
+        //         case "+":
+        //             return op1 + op2;
+
+        //         case "-":
+        //             return op1 - op2;
+
+        //         case "x":
+        //             return op1 * op2;
+
+        //         case "÷":
+        //             return op1 / op2;
+
+        //         case "%":
+        //             return op1 * op2 / 100;
+        //         default:
+        //             break;
+        //     }
+        // },
 
         crearDiv: () => {
 
