@@ -214,7 +214,7 @@
 
             // document.body.appendChild(calculadora.div); // nos esta creado y da error
             calculadora.div = div; // es como si pusieramos arriba div:null 
-            document.body.appendChild(calculadora.div); // nos esta creado y da error
+            document.body.appendChild(calculadora.div); // no se esta creado y da error
         },
 
         crearInput: () => {
