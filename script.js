@@ -19,19 +19,19 @@
         suma: false,
         resta: false,
 
-
         init: () => {
             calculadora.crearDiv(),
-                calculadora.crearInput(),
-                calculadora.crearBotones();
+            calculadora.crearInput(),
+            calculadora.crearBotones();
         },
 
         comportamiento(valor) {
 
             if (valor <= '9' && valor >= '1') {
                 return () => {
-                    if (calculadora.input.value === '0') {
+                    if (calculadora.input.value === '0' || calculadora.reiniciar) {
                         calculadora.input.value = valor;
+                        calculadora.reiniciar = false;
                     } else { // se puede usar también return en vez de else{}
                         calculadora.input.value += valor; //concatenamos el nuevo valor podemos usar calculadora.input.innerhtml
                     }
@@ -89,7 +89,7 @@
 
                     return () => {
                         calculadora.operando1 = calculadora.input.value;
-                        reset();
+                        calculadora.reiniciar = true;
                         calculadora.suma = true;
                     }
 
@@ -97,7 +97,7 @@
 
                     return () => {
                         calculadora.operando1 = calculadora.input.value;
-                        reset();
+                        calculadora.reiniciar = true;
                         calculadora.resta = true;
                     }
 
@@ -105,7 +105,7 @@
 
                     return () => {
                         calculadora.operando1 = calculadora.input.value;
-                        reset();
+                        calculadora.reiniciar = true;
                         calculadora.multiplicacion = true;
                     }
 
@@ -113,7 +113,7 @@
 
                     return () => {
                         calculadora.operando1 = calculadora.input.value;
-                        reset();
+                        calculadora.reiniciar = true;
                         calculadora.division = true;
                     }
 
@@ -121,7 +121,7 @@
 
                     return () => {
                         calculadora.operando1 = calculadora.input.value;
-                        reset();
+                        calculadora.reiniciar = true;
                         calculadora.porcentaje = true;
                     }
 
@@ -167,9 +167,9 @@
             //     }
             // }
 
-            function reset() {
-                calculadora.input.value = 0;
-            }
+            // function reset() {
+            //     calculadora.input.value = 0;
+            // }
 
         },
 
